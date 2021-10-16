@@ -22,12 +22,13 @@ namespace Parser
     {
         Exp[] spec =
         {
-            new(@"^\d+", "NUMBER"),
+            new(@"^\s+", null),
 
-            new("^\"(?<text>[^\"]*)\"", "STRING"),
-            new("'[^']*'", "STRING")
+            new(@"^\d+"       , "NUMBER"),
+
+            new("^\"[^\"]*\"" , "STRING"),
+            new("^'[^']*'"    , "STRING") 
         };
-
         string _string;
         int _cursor;
 
@@ -39,7 +40,7 @@ namespace Parser
 
         private bool hasMoreTokens()
         {
-            return _cursor < _string.Length;
+            return _cursor < _string.Length - 1;
         }
 
         public ASTNode getNextToken()
@@ -49,35 +50,37 @@ namespace Parser
                 return null;
             }
 
-            char[] str = _string.ToCharArray();
+            string str = _string.Substring(_cursor, _string.Length - _cursor);
 
             foreach(Exp exp in spec)
             {
-                ASTNode tokenValue = _match(exp.regex, _string);
+                ASTNode tokenValue = _match(exp, str);
 
                 if(tokenValue == null)
                 {
                     continue;
                 }
 
-                return new ASTNode(
-                    type: exp.type,
-                    value: tokenValue.value
-                    );
+                if(exp.type == null)
+                {
+                    return getNextToken();
+                }
+
+                return tokenValue;
             }
 
-            return null;
+            throw new Exception($"Unexpected token: {str[0]}");
         }
 
-        private ASTNode _match(string regexp, string str)
+        private ASTNode _match(Exp regexp, string str)
         {
-            MatchCollection matched = Regex.Matches(str, regexp);
+            MatchCollection matched = Regex.Matches(str, regexp.regex);
             if (matched != null && matched.Count != 0)
             {
-                _cursor += matched.Count;
+                _cursor += matched[0].Value.Length;
                 return new ASTNode(
-                    type: "STRING",
-                    value: matched[0].Groups["text"].Value
+                    type: regexp.type,
+                    value: matched[0].Value
                 );
             }
             else
