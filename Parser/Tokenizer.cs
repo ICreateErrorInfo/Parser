@@ -9,6 +9,14 @@ namespace Parser
 {
     public class Tokenizer
     {
+        string[] spec =
+        {
+            @"^\d+",
+
+            "\"[^\"]*\"",
+            "'[^']*'"
+        };
+
         string _string;
         int _cursor;
 
@@ -32,37 +40,36 @@ namespace Parser
 
             char[] str = _string.ToCharArray();
 
-            MatchCollection matched = Regex.Matches(_string, @"^\d+");
-            if(matched != null && matched.Count != 0)
+            foreach(string exp in spec)
             {
-                _cursor += matched.Count;
-                return new ASTNode(
-                    type: "NUMBER",
-                    value: matched[0].ToString()
-                );
-            }
+                ASTNode tokenValue = _match(exp, _string);
 
-            matched = Regex.Matches(_string, "^\"[^\"]*\"");
-            if (matched != null && matched.Count != 0)
-            {
-                _cursor += matched.Count;
-                return new ASTNode(
-                    type: "STRING",
-                    value: matched[0].ToString()
-                );
-            }
+                if(tokenValue == null)
+                {
+                    continue;
+                }
 
-            matched = Regex.Matches(_string, "'[^']*'");
-            if (matched != null && matched.Count != 0)
-            {
-                _cursor += matched.Count;
-                return new ASTNode(
-                    type: "STRING",
-                    value: matched[0].ToString()
-                );
+                return tokenValue;
             }
 
             return null;
+        }
+
+        private ASTNode _match(string regexp, string str)
+        {
+            MatchCollection matched = Regex.Matches(str, regexp);
+            if (matched != null && matched.Count != 0)
+            {
+                _cursor += matched.Count;
+                return new ASTNode(
+                    type: "STRING",
+                    value: matched[0].ToString()
+                );
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
