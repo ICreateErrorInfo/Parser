@@ -7,14 +7,25 @@ using System.Text.RegularExpressions;
 
 namespace Parser
 {
+    class Exp
+    {
+        public string regex;
+        public string type;
+
+        public Exp(string exp, string type)
+        {
+            this.regex = exp;
+            this.type = type;
+        }
+    }
     public class Tokenizer
     {
-        string[] spec =
+        Exp[] spec =
         {
-            @"^\d+",
+            new(@"^\d+", "NUMBER"),
 
-            "\"[^\"]*\"",
-            "'[^']*'"
+            new("^\"(?<text>[^\"]*)\"", "STRING"),
+            new("'[^']*'", "STRING")
         };
 
         string _string;
@@ -40,16 +51,19 @@ namespace Parser
 
             char[] str = _string.ToCharArray();
 
-            foreach(string exp in spec)
+            foreach(Exp exp in spec)
             {
-                ASTNode tokenValue = _match(exp, _string);
+                ASTNode tokenValue = _match(exp.regex, _string);
 
                 if(tokenValue == null)
                 {
                     continue;
                 }
 
-                return tokenValue;
+                return new ASTNode(
+                    type: exp.type,
+                    value: tokenValue.value
+                    );
             }
 
             return null;
@@ -63,7 +77,7 @@ namespace Parser
                 _cursor += matched.Count;
                 return new ASTNode(
                     type: "STRING",
-                    value: matched[0].ToString()
+                    value: matched[0].Groups["text"].Value
                 );
             }
             else
