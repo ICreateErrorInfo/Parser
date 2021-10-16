@@ -8,7 +8,10 @@ namespace Parser
         {
             Parser parser = new Parser();
 
-            string program = "\"Hello\"";
+            string program = "/** Number: \n" +
+                             " * Documentation comment \n" +
+                             " */ \n" +
+                             "\"Hello\"";
 
             ASTNode ast = parser.Parse(program);
 

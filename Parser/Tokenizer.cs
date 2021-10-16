@@ -24,6 +24,9 @@ namespace Parser
         {
             new(@"^\s+", null),
 
+            new(@"^\/\/.*", null),
+            new(@"^\/\/*[\s\S]*?\*\/", null),
+
             new(@"^\d+"       , "NUMBER"),
 
             new("^\"[^\"]*\"" , "STRING"),
