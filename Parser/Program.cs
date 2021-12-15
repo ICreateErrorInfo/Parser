@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parser.Lexer;
+using System;
 
 namespace Parser
 {
@@ -6,16 +7,19 @@ namespace Parser
     {
         static void Main(string[] args)
         {
-            Parser parser = new Parser();
+            while (true)
+            {
+                Tokenizer tokenizer = new Tokenizer();
 
-            string program = "/** Number: \n" +
-                             " * Documentation comment \n" +
-                             " */ \n" +
-                             "\"Hello\"";
+                var tokens = tokenizer.Tokenize(Console.ReadLine());
 
-            ASTNode ast = parser.Parse(program);
-
-            Console.WriteLine(ast.ToString());
+                foreach (var token in tokens)
+                {
+                    Console.Write(token.Value);
+                    Console.Write($", {token.TokenType}");
+                    Console.WriteLine();
+                }
+            }
         }
     }
 }
