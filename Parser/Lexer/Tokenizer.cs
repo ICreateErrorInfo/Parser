@@ -9,7 +9,7 @@ namespace Parser.Lexer
 {
     public class Tokenizer
     {
-        private List<TokenRegex> _tokenDefinitions;
+        private List<TokenDefinition> _tokenDefinitions;
 
         public Tokenizer()
         {
@@ -60,7 +60,7 @@ namespace Parser.Lexer
                 }
             }
 
-            return new TokenMatch() 
+            return new TokenMatch()
             { 
                 IsMatch = false 
             };

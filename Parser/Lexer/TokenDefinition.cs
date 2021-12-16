@@ -2,12 +2,12 @@
 
 namespace Parser.Lexer
 {
-    class TokenRegex
+    class TokenDefinition
     {
         private Regex _regex;
         private readonly TokenType _returnTokenType;
 
-        public TokenRegex(TokenType returnTokenType, string regexPattern)
+        public TokenDefinition(TokenType returnTokenType, string regexPattern)
         {
             _regex = new Regex(regexPattern);
             _returnTokenType = returnTokenType;

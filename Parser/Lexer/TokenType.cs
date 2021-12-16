@@ -4,8 +4,10 @@ namespace Parser.Lexer
 {
     public enum TokenType
     {
-        Add,
-        Sub,
+        plus,
+        minus,
+        multiply,
+        divide,
         Number,
         SequenceTerminator,
         Invalid
@@ -13,11 +15,13 @@ namespace Parser.Lexer
 
     static class TokenTypeRegex
     {
-        public static List<TokenRegex> RegexList = new List<TokenRegex>()
+        public static List<TokenDefinition> RegexList = new List<TokenDefinition>()
         {
-            new TokenRegex(TokenType.Number, "^\\d+"),
-            new TokenRegex(TokenType.Add,    "^\\+"),
-            new TokenRegex(TokenType.Sub,    "^\\-"),
+            new TokenDefinition(TokenType.Number,   "^\\d+(?:\\.\\d+)?"),
+            new TokenDefinition(TokenType.plus,     "^\\+"),
+            new TokenDefinition(TokenType.minus,    "^\\-"),
+            new TokenDefinition(TokenType.multiply, "^\\*"),
+            new TokenDefinition(TokenType.divide,   "^\\/"),
         };
     }
 }
