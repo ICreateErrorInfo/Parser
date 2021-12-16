@@ -10,23 +10,26 @@ namespace Parser.Parser
 {
     public class RDParser
     {
-        public List<TreeNode> nodes;
         private List<Token> _tokens;
         private Token nextToken;
         private int tokenIndex = 0;
+        public TreeNode resultTree;
 
         public RDParser()
         {
-            nodes = new List<TreeNode>();
             _tokens = new List<Token>();
         }
 
+        public double eval()
+        {
+            return resultTree.eval();
+        }
         public void Parse(List<Token> tokens)
         {
             _tokens = tokens;
 
             scanToken();
-            nodes.Add(ParseExpression());
+            resultTree = ParseExpression();
             if(nextToken.TokenType != TokenType.SequenceTerminator)
             {
                 throw new Exception();

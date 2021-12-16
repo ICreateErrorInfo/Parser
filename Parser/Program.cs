@@ -23,10 +23,8 @@ namespace Parser
                 }
 
                 parser.Parse(tokens);
-                foreach (var node in parser.nodes)
-                {
-                    Console.WriteLine(node.ToString());
-                }
+                Console.WriteLine(parser.resultTree.ToString());
+                Console.WriteLine(parser.eval());
             }
         }
     }

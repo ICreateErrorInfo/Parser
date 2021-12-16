@@ -19,7 +19,7 @@ namespace Parser.Parser.Nodes
 
         public override double eval()
         {
-            throw new NotImplementedException();
+            return left.eval() + right.eval();
         }
 
         public override string ToString()
