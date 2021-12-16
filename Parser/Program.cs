@@ -22,7 +22,7 @@ namespace Parser
                     Console.WriteLine();
                 }
 
-                parser.parse(tokens);
+                parser.Parse(tokens);
                 foreach (var node in parser.nodes)
                 {
                     Console.WriteLine(node.ToString());

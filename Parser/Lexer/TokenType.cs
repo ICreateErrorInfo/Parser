@@ -9,6 +9,8 @@ namespace Parser.Lexer
         multiply,
         divide,
         Number,
+        OpenParentheses,
+        CloseParentheses,
         SequenceTerminator,
         Invalid
     }
@@ -17,11 +19,13 @@ namespace Parser.Lexer
     {
         public static List<TokenDefinition> RegexList = new List<TokenDefinition>()
         {
-            new TokenDefinition(TokenType.Number,   "^\\d+(?:\\.\\d+)?"),
-            new TokenDefinition(TokenType.plus,     "^\\+"),
-            new TokenDefinition(TokenType.minus,    "^\\-"),
-            new TokenDefinition(TokenType.multiply, "^\\*"),
-            new TokenDefinition(TokenType.divide,   "^\\/"),
+            new TokenDefinition(TokenType.Number,            "^\\d+(?:\\.\\d+)?"),
+            new TokenDefinition(TokenType.plus,              "^\\+"),
+            new TokenDefinition(TokenType.minus,             "^\\-"),
+            new TokenDefinition(TokenType.multiply,          "^\\*"),
+            new TokenDefinition(TokenType.divide,            "^\\/"),
+            new TokenDefinition(TokenType.OpenParentheses,   "^\\("),
+            new TokenDefinition(TokenType.CloseParentheses,  "^\\)"),
         };
     }
 }

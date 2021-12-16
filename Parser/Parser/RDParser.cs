@@ -21,35 +21,35 @@ namespace Parser.Parser
             _tokens = new List<Token>();
         }
 
-        public void parse(List<Token> tokens)
+        public void Parse(List<Token> tokens)
         {
             _tokens = tokens;
 
             scanToken();
-            nodes.Add(parseE());
+            nodes.Add(ParseExpresion());
             if(nextToken.TokenType != TokenType.SequenceTerminator)
             {
                 throw new Exception();
             }
         }
 
-        public TreeNode parseE()
+        public TreeNode ParseExpresion()
         {
             TreeNode a;
-            a = parseT();
+            a = ParseTerm();
 
             while (true)
             {
                 if (nextToken.TokenType == TokenType.plus)
                 {
                     scanToken();
-                    var b = parseT();
+                    var b = ParseTerm();
                     a = new Add(a,b);
                 }
                 else if (nextToken.TokenType == TokenType.minus)
                 {
                     scanToken();
-                    var b = parseT();
+                    var b = ParseTerm();
                     a = new Sub(a, b);
                 }
                 else
@@ -58,22 +58,22 @@ namespace Parser.Parser
                 }
             }
         }
-        public TreeNode parseT()
+        public TreeNode ParseTerm()
         {
-            var a = parseF();
+            var a = parseFactor();
 
             while (true)
             {
                 if(nextToken.TokenType == TokenType.multiply)
                 {
                     scanToken();
-                    var b = parseF();
+                    var b = parseFactor();
                     a = new Mult(a,b);
                 }
                 else if(nextToken.TokenType == TokenType.divide)
                 {
                     scanToken();
-                    var b = parseF();
+                    var b = parseFactor();
                     a = new Div(a, b);
                 }
                 else
@@ -82,7 +82,7 @@ namespace Parser.Parser
                 }
             }
         }
-        public TreeNode parseF()
+        public TreeNode parseFactor()
         {
             switch (nextToken.TokenType)
             {
@@ -90,9 +90,22 @@ namespace Parser.Parser
                     var value = Convert.ToDouble(nextToken.Value);
                     scanToken();
                     return new Number(value);
+                case TokenType.OpenParentheses:
+                    scanToken();
+                    var a = ParseExpresion();
+                    if (a == null) return null;
+                    if (nextToken.TokenType == TokenType.CloseParentheses)
+                    {
+                        scanToken();
+                        return a;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 case TokenType.minus:
                     scanToken();
-                    return new Negate(parseF());
+                    return new Negate(parseFactor());
             }
 
             return null;
