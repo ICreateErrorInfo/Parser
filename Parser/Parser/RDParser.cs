@@ -26,14 +26,14 @@ namespace Parser.Parser
             _tokens = tokens;
 
             scanToken();
-            nodes.Add(ParseExpresion());
+            nodes.Add(ParseExpression());
             if(nextToken.TokenType != TokenType.SequenceTerminator)
             {
                 throw new Exception();
             }
         }
 
-        public TreeNode ParseExpresion()
+        public TreeNode ParseExpression()
         {
             TreeNode a;
             a = ParseTerm();
@@ -76,6 +76,12 @@ namespace Parser.Parser
                     var b = parseFactor();
                     a = new Div(a, b);
                 }
+                else if (nextToken.TokenType == TokenType.power)
+                {
+                    scanToken();
+                    var b = parseFactor();
+                    a = new Pow(a, b);
+                }
                 else
                 {
                     return a;
@@ -92,7 +98,7 @@ namespace Parser.Parser
                     return new Number(value);
                 case TokenType.OpenParentheses:
                     scanToken();
-                    var a = ParseExpresion();
+                    var a = ParseExpression();
                     if (a == null) return null;
                     if (nextToken.TokenType == TokenType.CloseParentheses)
                     {

@@ -11,6 +11,7 @@ namespace Parser.Lexer
         Number,
         OpenParentheses,
         CloseParentheses,
+        power,
         SequenceTerminator,
         Invalid
     }
@@ -26,6 +27,7 @@ namespace Parser.Lexer
             new TokenDefinition(TokenType.divide,            "^\\/"),
             new TokenDefinition(TokenType.OpenParentheses,   "^\\("),
             new TokenDefinition(TokenType.CloseParentheses,  "^\\)"),
+            new TokenDefinition(TokenType.power,             "^\\^"),
         };
     }
 }
