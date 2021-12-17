@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Parser.Parser.Nodes
 {
-    public class Equasion : TreeNode
+    public class Equation : TreeNode
     {
         public TreeNode left;
         public TreeNode right;
 
-        public Equasion(TreeNode left, TreeNode right)
+        public Equation(TreeNode left, TreeNode right)
         {
             this.left = left;
             this.right = right;
@@ -19,16 +19,16 @@ namespace Parser.Parser.Nodes
 
         public override double eval()
         {
-            TreeNode equasion = new Equasion(null, null);
+            TreeNode equasion = new Equation(null, null);
 
-            if(left.GetType() == typeof(Varible))
+            if(left.GetType() == typeof(Variable))
             {
-                Varible.varibleValues.Add(((Varible)left).symbol, right.eval());
+                Variable.varibleValues.Add(((Variable)left).symbol, right.eval());
                 return left.eval();
             }
-            else if(right.GetType() == typeof(Varible))
+            else if(right.GetType() == typeof(Variable))
             {
-                Varible.varibleValues.Add(((Varible)right).symbol, left.eval());
+                Variable.varibleValues.Add(((Variable)right).symbol, left.eval());
                 return right.eval();
             }
             if(solve(ref equasion))
@@ -43,15 +43,15 @@ namespace Parser.Parser.Nodes
             if (left.solve(ref right))
             {
                 Console.WriteLine("Left:" + right.ToString());
-                left = new Varible("x");
-                treeNode = new Equasion(right, left);
+                left = new Variable("x");
+                treeNode = new Equation(right, left);
                 return true;
             }
             if (right.solve(ref left))
             {
                 Console.WriteLine("Left:" + left.ToString());
-                right = new Varible("x");
-                treeNode = new Equasion(right, left);
+                right = new Variable("x");
+                treeNode = new Equation(right, left);
                 return true;
             }
             return false;

@@ -48,7 +48,7 @@ namespace Parser.Parser
             if(nextToken.TokenType == TokenType.equals)
             {
                 scanToken();
-                return new Equasion(a, ParseExpression());
+                return new Equation(a, ParseExpression());
             }
             else
             {
@@ -143,7 +143,7 @@ namespace Parser.Parser
                 case TokenType.varible:
                     var symbol = nextToken.Value;
                     scanToken();
-                    return new Varible(symbol);
+                    return new Variable(symbol);
             }
 
             return null;

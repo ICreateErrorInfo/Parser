@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Parser.Parser.Nodes
 {
-    public class Varible : TreeNode
+    public class Variable : TreeNode
     {
         public static Dictionary<string, double> varibleValues = new Dictionary<string, double>();
         public string symbol;
 
-        public Varible(string symbol)
+        public Variable(string symbol)
         {
             this.symbol = symbol;
         }
