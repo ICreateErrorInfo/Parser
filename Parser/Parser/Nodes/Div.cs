@@ -21,6 +21,20 @@ namespace Parser.Parser.Nodes
         {
             return left.eval() / right.eval();
         }
+        public override bool solve(ref TreeNode treeNode)
+        {
+            if (left.solve(ref treeNode))
+            {
+                treeNode = new Mult(treeNode, right);
+                return true;
+            }
+            else if (right.solve(ref treeNode))
+            {
+                treeNode = new Mult(treeNode, left);
+                return true;
+            }
+            return false;
+        }
 
         public override string ToString()
         {

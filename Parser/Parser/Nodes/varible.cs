@@ -24,6 +24,10 @@ namespace Parser.Parser.Nodes
             }
             throw new Exception();
         }
+        public override bool solve(ref TreeNode treeNode)
+        {
+            return true;
+        }
 
         public override string ToString()
         {

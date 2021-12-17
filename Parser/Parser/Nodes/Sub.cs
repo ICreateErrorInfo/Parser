@@ -19,7 +19,21 @@ namespace Parser.Parser.Nodes
 
         public override double eval()
         {
-            return left.eval() / right.eval();
+            return left.eval() - right.eval();
+        }
+        public override bool solve(ref TreeNode treeNode)
+        {
+            if (left.solve(ref treeNode))
+            {
+                treeNode = new Add(treeNode, right);
+                return true;
+            }
+            else if (right.solve(ref treeNode))
+            {
+                treeNode = new Add(treeNode, left);
+                return true;
+            }
+            return false;
         }
 
         public override string ToString()

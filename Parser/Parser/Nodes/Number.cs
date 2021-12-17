@@ -19,6 +19,10 @@ namespace Parser.Parser.Nodes
         {
             return Num;
         }
+        public override bool solve(ref TreeNode treeNode)
+        {
+            return false;
+        }
 
         public override string ToString()
         {

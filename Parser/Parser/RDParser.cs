@@ -24,6 +24,10 @@ namespace Parser.Parser
         {
             return resultTree.eval();
         }
+        public bool solve()
+        {
+            return resultTree.solve(ref resultTree);
+        }
         public void Parse(List<Token> tokens)
         {
             _tokens = tokens;

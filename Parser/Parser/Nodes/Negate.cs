@@ -19,6 +19,11 @@ namespace Parser.Parser.Nodes
         {
             return -arg.eval();
         }
+        public override bool solve(ref TreeNode treeNode)
+        {
+            throw new NotImplementedException("No negate");
+            return arg.solve(ref treeNode);
+        }
 
         public override string ToString()
         {

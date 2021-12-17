@@ -21,6 +21,15 @@ namespace Parser.Parser.Nodes
         {
             return Math.Pow(basis.eval(), exponent.eval());
         }
+        public override bool solve(ref TreeNode treeNode)
+        {
+            throw new NotImplementedException("No Pow");
+            if (basis.solve(ref treeNode) || exponent.solve(ref treeNode))
+            {
+                return true;
+            }
+            return false;
+        }
 
         public override string ToString()
         {

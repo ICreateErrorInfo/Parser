@@ -9,5 +9,6 @@ namespace Parser.Parser.Nodes
     public abstract class TreeNode
     {
         public abstract double eval();
+        public abstract bool solve(ref TreeNode treeNode);
     }
 }
