@@ -29,13 +29,28 @@ namespace Parser.Parser
             _tokens = tokens;
 
             scanToken();
-            resultTree = ParseExpression();
+            resultTree = ParseEquasion();
             if(nextToken.TokenType != TokenType.SequenceTerminator)
             {
                 throw new Exception();
             }
         }
 
+
+        public TreeNode ParseEquasion()
+        {
+            TreeNode a = ParseExpression();
+
+            if(nextToken.TokenType == TokenType.equals)
+            {
+                scanToken();
+                return new Equasion(a, ParseExpression());
+            }
+            else
+            {
+                return a;
+            }
+        }
         public TreeNode ParseExpression()
         {
             TreeNode a;
@@ -115,6 +130,16 @@ namespace Parser.Parser
                 case TokenType.minus:
                     scanToken();
                     return new Negate(parseFactor());
+                case TokenType.PI:
+                    scanToken();
+                    return new Number(Math.PI);
+                case TokenType.EulersNumber:
+                    scanToken();
+                    return new Number(Math.E);
+                case TokenType.varible:
+                    var symbol = nextToken.Value;
+                    scanToken();
+                    return new Varible(symbol);
             }
 
             return null;

@@ -12,6 +12,10 @@ namespace Parser.Lexer
         OpenParentheses,
         CloseParentheses,
         power,
+        PI,
+        equals,
+        varible,
+        EulersNumber,
         SequenceTerminator,
         Invalid
     }
@@ -28,6 +32,10 @@ namespace Parser.Lexer
             new TokenDefinition(TokenType.OpenParentheses,   "^\\("),
             new TokenDefinition(TokenType.CloseParentheses,  "^\\)"),
             new TokenDefinition(TokenType.power,             "^\\^"),
+            new TokenDefinition(TokenType.PI,                "^(pi|Pi|PI)"),
+            new TokenDefinition(TokenType.EulersNumber,      "^e"),
+            new TokenDefinition(TokenType.equals,            "^="),
+            new TokenDefinition(TokenType.varible,           "^[a-z]"),
         };
     }
 }
